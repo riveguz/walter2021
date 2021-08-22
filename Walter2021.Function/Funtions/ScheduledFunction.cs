@@ -11,18 +11,18 @@ namespace Walter2021.Function.Funtions
     {
         [FunctionName("ScheduledFunction")]
         public static async Task Run(
-            [TimerTrigger("0 */1 * * * *")] TimerInfo myTimer,
+            [TimerTrigger("0 */2 * * * *")] TimerInfo myTimer,
             [Table("walter", Connection = "AzureWebJobsStorage")] CloudTable walterTable,
             ILogger log)
         {
             log.LogInformation($"Deleting completed function executed at: {DateTime.Now}");
 
 
-            string filter = TableQuery.GenerateFilterConditionForBool("Iscompleted", QueryComparisons.Equal, true);
+            string filter = TableQuery.GenerateFilterConditionForBool("IsCompleted", QueryComparisons.Equal, true);
             TableQuery<WalterEntity> query = new TableQuery<WalterEntity>().Where(filter);
             TableQuerySegment<WalterEntity> completedWalters = await walterTable.ExecuteQuerySegmentedAsync(query, null);
             int deleted = 0;
-            foreach (WalterEntity completedWalter in completedWalters)
+            foreach(WalterEntity completedWalter in completedWalters)
             {
                 await walterTable.ExecuteAsync(TableOperation.Delete(completedWalter));
                 deleted++;
