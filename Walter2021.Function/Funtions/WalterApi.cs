@@ -86,7 +86,7 @@ namespace Walter2021.Function.Funtions
             }
 
             //Update walter
-            WalterEntity walterEntity = (WalterEntity)findResult.Result;
+            WalterEntity walterEntity = (WalterEntity)findResult.Result; 
             walterEntity.IsCompleted = walter.IsCompleted;
             if(!string.IsNullOrEmpty(walter.TaskDescription))
             {
