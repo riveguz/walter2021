@@ -76,7 +76,7 @@ namespace Walter2021.Function.Funtions
             //Validate walter id
             TableOperation findOperation = TableOperation.Retrieve<WalterEntity>("WALTER", id);
             TableResult findResult = await walterTable.ExecuteAsync(findOperation);
-            if(findResult.Result ==null)
+            if (findResult.Result == null)
             {
                 return new BadRequestObjectResult(new Response
                 {
@@ -86,9 +86,9 @@ namespace Walter2021.Function.Funtions
             }
 
             //Update walter
-            WalterEntity walterEntity = (WalterEntity)findResult.Result; 
+            WalterEntity walterEntity = (WalterEntity)findResult.Result;
             walterEntity.IsCompleted = walter.IsCompleted;
-            if(!string.IsNullOrEmpty(walter.TaskDescription))
+            if (!string.IsNullOrEmpty(walter.TaskDescription))
             {
                 walterEntity.TaskDescription = walter.TaskDescription;
             }
@@ -99,6 +99,89 @@ namespace Walter2021.Function.Funtions
             string message = $"Walter: {id}, update in table.";
             log.LogInformation(message);
 
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = walterEntity
+            });
+        }
+
+        [FunctionName(nameof(GetAllWalters))]
+        public static async Task<IActionResult> GetAllWalters(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "walter")] HttpRequest req,
+            [Table("walter", Connection = "AzureWebJobsStorage")] CloudTable walterTable,
+           ILogger log)
+        {
+            log.LogInformation("Get all walter received");
+
+            TableQuery<WalterEntity> query = new TableQuery<WalterEntity>();
+            TableQuerySegment<WalterEntity> walter = await walterTable.ExecuteQuerySegmentedAsync(query, null);
+
+            string message = "Retrieve all walter";
+            log.LogInformation(message);
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = walter
+            });
+        }
+
+        [FunctionName(nameof(GetWalterById))]
+        public static IActionResult GetWalterById(
+          [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "walter/{id}")] HttpRequest req,
+          [Table("walter", "WALTER", "{id}", Connection = "AzureWebJobsStorage")] WalterEntity walterEntity,
+          string id,
+          ILogger log)
+        {
+            log.LogInformation($"Get walter by id: {id}, received");
+
+            if (walterEntity == null)
+            {
+                return new BadRequestObjectResult(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Walter not found"
+                });
+            }
+
+            string message = $"Walter: {walterEntity.RowKey}, Retrieve";
+            log.LogInformation(message);
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = walterEntity
+            });
+        }
+
+        [FunctionName(nameof(DeleteWalter))]
+        public static async Task<IActionResult> DeleteWalter(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "walter/{id}")] HttpRequest req,
+           [Table("walter", "WALTER", "{id}", Connection = "AzureWebJobsStorage")] WalterEntity walterEntity,
+           [Table("walter", Connection = "AzureWebJobsStorage")] CloudTable walterTable,
+
+           string id,
+           ILogger log)
+        {
+            log.LogInformation($"Delete Walter: {id}, received");
+
+            if (walterEntity == null)
+            {
+                return new BadRequestObjectResult(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Walter not found"
+                });
+            }
+
+            await walterTable.ExecuteAsync(TableOperation.Delete(walterEntity));
+            string message = $"Walter: {walterEntity.RowKey}, deleted";
+            log.LogInformation(message);
 
             return new OkObjectResult(new Response
             {
