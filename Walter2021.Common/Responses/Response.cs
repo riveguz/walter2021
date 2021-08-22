@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Walter2021.Common.Responses
+﻿namespace Walter2021.Common.Responses
 {
     public class Response
     {

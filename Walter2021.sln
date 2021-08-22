@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walter2021.Common", "Walter2021.Common\Walter2021.Common.csproj", "{ADBD5B9F-36B0-401C-8CAE-790A490DBEE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walter2021.Common", "Walter2021.Common\Walter2021.Common.csproj", "{ADBD5B9F-36B0-401C-8CAE-790A490DBEE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walter2021.Function", "Walter2021.Function\Walter2021.Function.csproj", "{AD20C7A2-D574-47E9-A95A-4C2D681BBB88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walter2021.Function", "Walter2021.Function\Walter2021.Function.csproj", "{AD20C7A2-D574-47E9-A95A-4C2D681BBB88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walter2021.Tests", "Walter2021.Tests\Walter2021.Tests.csproj", "{FCCA3063-FEEE-4798-9BC7-73A13D6AB207}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walter2021.Tests", "Walter2021.Tests\Walter2021.Tests.csproj", "{FCCA3063-FEEE-4798-9BC7-73A13D6AB207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
