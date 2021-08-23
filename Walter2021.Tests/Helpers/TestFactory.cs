@@ -4,9 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Walter2021.Common.Models;
 using Walter2021.Function.Entities;
 
@@ -60,7 +58,7 @@ namespace Walter2021.Tests.Helpers
             return new DefaultHttpRequest(new DefaultHttpContext());
         }
 
-        public  static Walter GetWalterRequest()
+        public static Walter GetWalterRequest()
         {
             return new Walter
             {
@@ -84,7 +82,7 @@ namespace Walter2021.Tests.Helpers
         public static ILogger CreateLogger(LoggerTypes type = LoggerTypes.Null)
         {
             ILogger logger;
-            if(type == LoggerTypes.List)
+            if (type == LoggerTypes.List)
             {
                 logger = new ListLogger();
             }
